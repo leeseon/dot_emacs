@@ -1,0 +1,90 @@
+(cua-mode t)
+(ido-mode t)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-S-z") 'redo)
+(transient-mark-mode 1)
+(delete-selection-mode 1)
+(global-font-lock-mode 1) ; turn on syntax coloring
+(show-paren-mode 1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-screen t)
+
+; highlight current line
+(add-hook 'text-mode-hook (lambda () (hl-line-mode 1)))
+
+(setq initial-scratch-message nil)
+
+(add-to-list 'load-path "~/.emacs.d")
+(require 'inf-ruby)
+(require 'redo+)
+(require 'nginx-mode)
+
+(autoload 'ruby-mode "ruby-mode"
+  "Mode for editing ruby source files" t)
+(setq auto-mode-alist
+      (append '(("\\.rb$" . ruby-mode)) auto-mode-alist))
+(setq interpreter-mode-alist (append '(("ruby" . ruby-mode))
+   				     interpreter-mode-alist))
+
+(autoload 'run-ruby "inf-ruby"
+  "Run an inferior Ruby process")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook
+	  '(lambda ()
+	     (inf-ruby-keys)
+	     ))
+
+
+(add-hook 'ruby-mode-hook (lambda () (set tab-width 2)))
+					; show line number the cursor is on, in status bar (the mode line)
+(line-number-mode 1)
+					; display line numbers in margin (fringe). Emacs 23 only.
+(global-linum-mode 1) ; always show line numbers
+(column-number-mode 1)
+(setq make-backup-files nil) ; stop creating those backup~ files
+(setq auto-save-default nil) ; stop creating those #autosave# files
+(recentf-mode 1)
+(global-visual-line-mode 1) ; 1 for on, 0 for off.
+(global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+
+
+;; (setenv "ERGOEMACS_KEYBOARD_LAYOUT" "us") ; US layout
+;; (load "~/.emacs.d/ergoemacs-keybindings-5.3.4/ergoemacs-mode")
+;; (ergoemacs-mode 1)
+
+(load-file "~/.emacs.d/ergoemacs_1.9.1.1/site-lisp/site-start.el")
+
+
+(global-set-key [(shift delete)] 'clipboard-kill-region)
+(global-set-key [(control insert)] 'clipboard-kill-ring-save)
+(global-set-key [(shift insert)] 'clipboard-yank)
+(global-set-key (kbd "C-x o") 'other-window)
+
+(setq load-path (cons "~/.emacs.d/magit" load-path))
+(require 'magit)
+
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+(load-file "~/.emacs.d/color-theme-6.6.0/themes/blackboard.el")
+
+;; (if (equal window-system 'x)
+    (color-theme-blackboard)
+;; )
+
+;;(setq rsense-home "$RSENSE_HOME")
+(add-to-list 'load-path "~/rsense-0.3/etc");;(concat rsense-home "/etc"))
+(require 'rsense)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
